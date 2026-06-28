@@ -1285,6 +1285,45 @@
     }
   }
 
+  // Offline banner element — shown when chat backend is unreachable
+  var offlineBanner = null;
+  function showOfflineBanner() {
+    if (offlineBanner) return;
+    offlineBanner = document.createElement('div');
+    offlineBanner.id = 'tmnmv-chat-offline-banner';
+    offlineBanner.style.cssText = 'padding:12px 20px;background:#fff0f0;color:#da1e28;font-size:13px;line-height:1.5;border-bottom:1px solid #f5c2c2;';
+    offlineBanner.innerHTML = '<strong>Chat is offline right now.</strong> Our server may be down for maintenance or due to a power issue. Leave a note at <a href="https://tmnmv.com/#contact" style="color:#0f62fe;text-decoration:underline;">tmnmv.com/#contact</a> and we\'ll get back to you.';
+    var messagesEl = document.getElementById('tmnmv-chat-messages');
+    if (messagesEl && messagesEl.parentNode) {
+      messagesEl.parentNode.insertBefore(offlineBanner, messagesEl);
+    }
+    // Disable input
+    if (input) input.disabled = true;
+    if (sendBtn) sendBtn.disabled = true;
+    if (input) input.placeholder = 'Chat offline — see message above';
+  }
+  function hideOfflineBanner() {
+    if (!offlineBanner) return;
+    offlineBanner.remove();
+    offlineBanner = null;
+    if (input) { input.disabled = false; sendBtn.disabled = false; input.placeholder = 'Ask about our services...'; }
+  }
+
+  // Probe chat backend reachability. Uses no-cors GET so CORS doesn't block.
+  // 3s timeout — fail fast. Resolves true if reachable, false if not.
+  function probeChatOnline() {
+    return new Promise(function (resolve) {
+      var done = false;
+      var finish = function (ok) { if (!done) { done = true; resolve(ok); } };
+      var to = setTimeout(function () { finish(false); }, 3000);
+      try {
+        fetch('https://chat.tmnmv.com/?_=' + Date.now(), { method: 'GET', mode: 'no-cors', cache: 'no-store' })
+          .then(function () { clearTimeout(to); finish(true); })
+          .catch(function () { clearTimeout(to); finish(false); });
+      } catch (_) { clearTimeout(to); finish(false); }
+    });
+  }
+
   // Toggle panel
   toggle.addEventListener('click', function () {
     const isOpen = panel.classList.toggle('open');
@@ -1296,6 +1335,10 @@
     if (isOpen) {
       // Wait one frame so the panel is visible before focusing
       requestAnimationFrame(() => input.focus());
+      // Probe chat backend; show offline banner if unreachable
+      probeChatOnline().then(function (online) { if (!online) showOfflineBanner(); });
+    } else {
+      hideOfflineBanner();
     }
   });
 
