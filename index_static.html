@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>TMNMV &mdash; Small business, fully built out</title>
+  <meta name="description" content="Websites, marketing, and AI for small business. Strategy, creative, and engineering for the operator doing it all.">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta property="og:title" content="TMNMV &mdash; Small business, fully built out">
+  <meta property="og:description" content="Websites, marketing, and AI for small business. Strategy, creative, and engineering for the operator doing it all.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2300d4aa'/%3E%3Ctext x='16' y='22' font-family='Inter,sans-serif' font-size='18' font-weight='700' fill='%230a0a0a' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-elev: #141414;
+      --bg-card: #1a1a1a;
+      --bg-card-hover: #222;
+      --border: #2a2a2a;
+      --border-soft: #1f1f1f;
+      --text: #f5f5f5;
+      --text-soft: #a3a3a3;
+      --text-mute: #6b6b6b;
+      --accent: #00d4aa;
+      --accent-soft: rgba(0, 212, 170, 0.12);
+      --accent-glow: rgba(0, 212, 170, 0.35);
+      --max: 1120px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 64px 64px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(10, 10, 10, 0.7);
+      border-bottom: 1px solid var(--border-soft);
+    }
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      height: 64px;
+      gap: 32px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: var(--accent);
+      display: grid;
+      place-items: center;
+      color: var(--bg);
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      margin-left: auto;
+    }
+    .nav-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); background: var(--bg-elev); }
+    .nav-cta {
+      color: var(--bg) !important;
+      background: var(--accent);
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: #00b894 !important; }
+
+    .hero {
+      padding: 120px 0 96px;
+      position: relative;
+      overflow: hidden;  /* clip the decorative glow so it can't widen the page */
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(800px, 100%);
+      max-width: 100vw;  /* belt-and-suspenders: never wider than the viewport */
+      height: 400px;
+      background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 60%);
+      opacity: 0.3;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .hero h1 {
+      font-size: clamp(40px, 7vw, 76px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      margin-bottom: 24px;
+    }
+    .hero h1 .accent {
+      background: linear-gradient(135deg, var(--accent) 0%, #4dffe0 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero .lede {
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.5;
+      color: var(--text-soft);
+      max-width: 680px;
+      margin-bottom: 40px;
+    }
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    .btn-primary:hover {
+      background: #00b894;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px var(--accent-glow);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover {
+      background: var(--bg-elev);
+      border-color: var(--text-mute);
+    }
+    .arrow { transition: transform 0.2s; }
+    .btn:hover .arrow { transform: translateX(3px); }
+
+    section { padding: 96px 0; }
+    .sec-head { margin-bottom: 56px; }
+    .sec-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sec-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .sec-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+    .sec-desc {
+      font-size: 17px;
+      color: var(--text-soft);
+      max-width: 640px;
+      line-height: 1.6;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 17px;
+      color: var(--text-soft);
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+    .about-text strong { color: var(--text); font-weight: 600; }
+    .stat-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .stat {
+      background: var(--bg);
+      padding: 24px;
+    }
+    .stat-num {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-num .unit { color: var(--accent); font-size: 24px; }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.4;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .services-subhead {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 24px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .services-subhead::before {
+      content: '';
+      width: 16px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .services-grid.services-grid-creative {
+      grid-template-columns: repeat(4, 1fr) !important;
+      margin-bottom: 12px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-soft);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .service-card {
+      background: var(--bg);
+      padding: 32px 24px;
+      transition: background 0.2s;
+    }
+    .service-card:hover { background: var(--bg-elev); }
+    .service-icon {
+      font-size: 28px;
+      margin-bottom: 14px;
+      line-height: 1;
+    }
+    .service-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .service-card p {
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+    .work-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+    .work-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .work-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border);
+      transform: translateY(-2px);
+    }
+    .work-card:hover::before { opacity: 1; }
+    .work-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      letter-spacing: 0.03em;
+    }
+    .work-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .work-card p {
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .work-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .stack-chip {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 3px 8px;
+      background: var(--bg);
+      color: var(--text-soft);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+    .work-foot {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--text-soft);
+      font-weight: 500;
+    }
+    .work-card.featured {
+      grid-column: span 2;
+      background: linear-gradient(135deg, var(--bg-card) 0%, rgba(0, 212, 170, 0.04) 100%);
+    }
+    .work-card.featured h3 { font-size: 28px; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-soft);
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .skill-col {
+      background: var(--bg);
+      padding: 28px;
+    }
+    .skill-col h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .skill-list { list-style: none; }
+    .skill-list li {
+      font-size: 14px;
+      color: var(--text-soft);
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .skill-list li::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .process-step {
+      position: relative;
+    }
+    .process-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .process-step h4 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .process-step p {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    .contact-card {
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elev) 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 56px;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .contact-card h2 {
+      font-size: clamp(28px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .contact-card p {
+      color: var(--text-soft);
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+    .contact-info {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+    .contact-info a {
+      color: var(--accent);
+      text-decoration: none;
+      display: block;
+      padding: 6px 0;
+      word-break: break-all;
+    }
+    .contact-info a:hover { text-decoration: underline; }
+    .form { display: flex; flex-direction: column; gap: 14px; }
+    .form input, .form textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form input:focus, .form textarea:focus {
+      border-color: var(--accent);
+    }
+    .form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .form button {
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .form button:hover { background: #00b894; }
+
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 32px 0;
+      color: var(--text-mute);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .foot-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .foot-links { display: flex; gap: 20px; }
+    .foot-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+    }
+    .foot-links a:hover { color: var(--accent); }
+
+    @media (max-width: 900px) {
+      .about-grid, .work-grid, .skills-grid, .process-grid, .services-grid { grid-template-columns: 1fr; }
+      .services-grid.services-grid-creative { grid-template-columns: 1fr 1fr !important; }
+      .work-card.featured { grid-column: span 1; }
+      .contact-card { grid-template-columns: 1fr; padding: 32px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero { padding: 80px 0 64px; }
+      section { padding: 64px 0; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 500px) {
+      .wrap { padding: 0 18px; }
+      nav .wrap { gap: 12px; }
+      .stat-row { grid-template-columns: 1fr; }
+      .hero h1 { font-size: clamp(32px, 9vw, 44px); }
+      .service-card { padding: 24px 18px; }
+      .services-grid.services-grid-creative { grid-template-columns: 1fr !important; }
+    }
+    /* Defensive: nothing on the page can be wider than the viewport.
+       Prevents position:fixed children (chat widget) from being offset
+       by overflow content. */
+    html, body { max-width: 100vw; overflow-x: hidden; }
+    body > * { max-width: 100vw; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="brand">
+      <span class="brand-mark">T</span>
+      <span>TMNMV</span>
+    </a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#process">Process</a>
+      <a href="#contact" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>
+      Small business,<br>
+      <span class="accent">fully built out.</span>
+    </h1>
+    <p class="lede">
+      Websites, marketing, and AI for the operator doing it all. TMNMV
+      handles the parts of a small business that look finished to the
+      outside world &mdash; the site, the brand, the social presence, the
+      tools that keep the back office moving &mdash; so the owner can get
+      back to running the actual business.
+    </p>
+    <div class="hero-cta">
+      <a href="#services" class="btn btn-primary">See what we do <span class="arrow">&rarr;</span></a>
+      <a href="#contact" class="btn btn-secondary">Start a conversation</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">About</div>
+      <h2 class="sec-title">The small business has a finished edge.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          TMNMV exists for the operator who already has a real business and
+          needs it to <strong>look and run like one</strong>. The website
+          that actually ranks. The marketing materials a customer takes
+          home. The social presence that doesn't go quiet for three weeks.
+          The internal tool that stops being a spreadsheet on a shared
+          drive.
+        </p>
+        <p>
+          We do the websites, the marketing collateral, the social media,
+          the photo work, the small automations, and the strategy behind
+          all of it. Some of it ships in a week. Some of it ships in a
+          quarter. All of it is built to be operated by the person who
+          already runs the business &mdash; not handed back as a thing
+          that needs its own maintainer.
+        </p>
+        <p>
+          The team behind the work has spent a decade inside larger
+          organizations learning what <em>finished</em> looks like &mdash;
+          the production discipline, the brand consistency, the unglamorous
+          detail work. TMNMV brings that standard to a business your size,
+          at a price your size can absorb.
+        </p>
+      </div>
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-num">10<span class="unit">+</span></div>
+          <div class="stat-label">Years of operator experience behind the work</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">7</div>
+          <div class="stat-label">Services under one roof, from websites to AI</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">1</div>
+          <div class="stat-label">Point of contact. One team, one invoice.</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">7d</div>
+          <div class="stat-label">Typical turnaround on a first deliverable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">What we do</div>
+      <h2 class="sec-title">The work that makes a small business look polished and refined.</h2>
+      <p class="sec-desc">
+        Websites, marketing, and AI on the front of the house. Strategy and
+        engineering when the business is ready to grow past the spreadsheet.
+      </p>
+    </div>
+
+    <div class="services-subhead">Creative &amp; Marketing</div>
+    <div class="services-grid services-grid-creative">
+      <div class="service-card">
+        <div class="service-icon">&#127760;</div>
+        <h3>Website building</h3>
+        <p>Clean, fast, mobile first sites that rank. Built on a stack a non developer can update after handoff. No mystery platform, no monthly lock in unless you want it.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128196;</div>
+        <h3>Marketing materials</h3>
+        <p>One pagers, capability decks, leave behinds, branded social graphics, signage, the printed piece the customer actually takes home. Designed to match the site and the room.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128241;</div>
+        <h3>Social media</h3>
+        <p>Content calendars, post design, captions, scheduling, and account management. Built around the hours you actually have, not a 40 hour a week retainer no small team needs.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128247;</div>
+        <h3>Photo editing</h3>
+        <p>Product shots, headshots, retouching, batch processing, and rescue work on the photo library that never made it past the phone. Same look across the whole catalog.</p>
+      </div>
+    </div>
+
+    <div class="services-subhead">Consulting &amp; Engineering</div>
+    <div class="services-grid services-grid-consulting">
+      <div class="service-card">
+        <div class="service-icon">&#9881;&#65039;</div>
+        <h3>IT Implementation</h3>
+        <p>End to end technology deployment &mdash; infrastructure setup, system integration, cloud migration, and enterprise tooling configured for your workflow.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#129504;</div>
+        <h3>AI Integration</h3>
+        <p>Production AI deployment &mdash; LLM orchestration, RAG pipelines, AI agents, and custom automation built and hardened for real business operations.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128200;</div>
+        <h3>Marketing Strategy</h3>
+        <p>Data driven marketing &mdash; brand positioning, digital presence, content strategy, and go to market planning for new ventures and product launches.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128180;</div>
+        <h3>Financial Services</h3>
+        <p>Specialized consulting for banking, fintech, and regulated industries &mdash; compliance aware technology implementation and operational optimization.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#128260;</div>
+        <h3>Business Transformation</h3>
+        <p>Operational strategy, process redesign, and organizational change management to prepare your business for its next phase of growth.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">&#129309;</div>
+        <h3>Strategic Advisory</h3>
+        <p>C suite and executive level advisory &mdash; market entry strategy, partnership development, and technology roadmap planning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">Recent work</div>
+      <h2 class="sec-title">Three businesses, fully built out.</h2>
+      <p class="sec-desc">
+        Real engagements, real sites, real operators. Each one is the kind of
+        work TMNMV takes on &mdash; a finished edge, handed back to a team
+        that runs it.
+      </p>
+    </div>
+
+    <div class="work-grid">
+      <a class="work-card" href="https://www.stanleydrilling.com/" target="_blank" rel="noopener">
+        <span class="work-tag">Web &middot; B2B</span>
+        <h3>Stanley Drilling Equipment &amp; Supply</h3>
+        <p>Website build for a Gulf Coast drilling supplier serving upstream and midstream operators. Established business, modern web presence, clear path to the contact form.</p>
+        <div class="work-stack">
+          <span class="stack-chip">Web design</span>
+          <span class="stack-chip">Lead capture</span>
+          <span class="stack-chip">SEO basics</span>
+        </div>
+        <div class="work-foot">stanleydrilling.com <span class="arrow">&rarr;</span></div>
+      </a>
+
+      <a class="work-card" href="https://www.originationdrillingsupply.com/" target="_blank" rel="noopener">
+        <span class="work-tag">Web &middot; Catalog</span>
+        <h3>Origination Drilling &amp; Supply</h3>
+        <p>Website build for an oil and gas parts and procurement operation. Catalog ready, supplier story told, designed to make a field consultant pick up the phone.</p>
+        <div class="work-stack">
+          <span class="stack-chip">Web design</span>
+          <span class="stack-chip">Service pages</span>
+          <span class="stack-chip">Photo work</span>
+        </div>
+        <div class="work-foot">originationdrillingsupply.com <span class="arrow">&rarr;</span></div>
+      </a>
+
+      <a class="work-card featured" href="https://www.spmgrp.com/" target="_blank" rel="noopener">
+        <span class="work-tag">Web &middot; AI integration</span>
+        <h3>SPM Group</h3>
+        <p>Website build plus a custom AI assistant integration for a recruitment firm. Two services, one site, with the AI assistant wired in to handle the front door so the recruiters stay on the phones.</p>
+        <div class="work-stack">
+          <span class="stack-chip">Web design</span>
+          <span class="stack-chip">AI assistant</span>
+          <span class="stack-chip">Lead routing</span>
+        </div>
+        <div class="work-foot">spmgrp.com <span class="arrow">&rarr;</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">How we work</div>
+      <h2 class="sec-title">Embed, build, harden, hand off.</h2>
+      <p class="sec-desc">
+        The pattern we use across consulting, presales, and self-directed
+        builds. It's not glamorous, but it ships.
+      </p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step">
+        <div class="process-num">01</div>
+        <h4>Get on the ground</h4>
+        <p>Talk to the actual users. Read the actual data. Map the seams before touching the stack.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">02</div>
+        <h4>Build the smallest real thing</h4>
+        <p>Prototype against real constraints, not a clean-room environment. Iterate in days, not weeks.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">03</div>
+        <h4>Harden it for production</h4>
+        <p>Guardrails, observability, rate limits, error paths, the URL filter that keeps you off a press list.</p>
+      </div>
+      <div class="process-step">
+        <div class="process-num">04</div>
+        <h4>Hand off cleanly</h4>
+        <p>Runbooks, code that someone else can read, and a relationship the team actually wants to keep.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label">Stack</div>
+      <h2 class="sec-title">What we work with.</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-col">
+        <h4>AI &amp; Agents</h4>
+        <ul class="skill-list">
+          <li>LLM orchestration (Ollama, OpenAI, OpenRouter)</li>
+          <li>RAG pipelines &amp; vector search</li>
+          <li>Agent design &amp; tool calling</li>
+          <li>Prompt engineering &amp; eval</li>
+          <li>Guardrails &amp; brand safety</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>Engineering</h4>
+        <ul class="skill-list">
+          <li>Python (FastAPI, Flask)</li>
+          <li>JavaScript / TypeScript</li>
+          <li>Docker &amp; container ops</li>
+          <li>Linux &amp; systemd</li>
+          <li>SQL &amp; SQLite</li>
+        </ul>
+      </div>
+      <div class="skill-col">
+        <h4>Infra &amp; Edge</h4>
+        <ul class="skill-list">
+          <li>Cloudflare Tunnel &amp; Access</li>
+          <li>nginx &amp; reverse proxies</li>
+          <li>Networking &amp; DNS</li>
+          <li>Observability &amp; log pipelines</li>
+          <li>Backup &amp; recovery</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-card">
+      <div>
+        <h2>Let's talk about your project.</h2>
+        <p>
+          Whether you're entering a new market, modernizing your tech stack, or
+          deploying AI &mdash; we're ready to help. Drop a note and we'll
+          respond within a business day.
+        </p>
+      </div>
+      <form class="form" action="https://formsubmit.co/tony.m.nguyen@gmail.com" method="POST">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="you@company.com" required>
+        <textarea name="message" placeholder="What are you building? Where's it stuck?" required></textarea>
+        <button type="submit">Send message &rarr;</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div>&copy; 2026 TMNMV &middot; Trusted Management New Market Ventures.</div>
+      <div class="foot-links">
+        <a href="#">Top &uarr;</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Static-only chat status indicator for GitHub Pages.
+     Replaces the full chat widget when hosted statically.
+     Pings chat.tmnmv.com on load; shows a colored dot + label.
+     No fetch to relative /chat (which would 404 on Pages). -->
+<style>
+  #tmnmv-chat-status {
+    position: fixed !important;
+    inset: auto calc(24px + env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) auto !important;
+    background: #0a0a0a;
+    color: #f5f5f5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 999px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    z-index: 9999 !important;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  #tmnmv-chat-status:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,0,0,0.3); }
+  #tmnmv-chat-status .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #a3a3a3;
+    flex-shrink: 0;
+    transition: background 0.3s ease;
+  }
+  #tmnmv-chat-status.available .dot {
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+  }
+  #tmnmv-chat-status.unavailable .dot {
+    background: #ef4444;
+  }
+  #tmnmv-chat-status .label { white-space: nowrap; }
+  @media (max-width: 480px) {
+    #tmnmv-chat-status { font-size: 12px; padding: 8px 12px; }
+  }
+</style>
+<a id="tmnmv-chat-status" href="https://chat.tmnmv.com/" target="_blank" rel="noopener" aria-label="Open chatbot">
+  <span class="dot" aria-hidden="true"></span>
+  <span class="label">Checking chat…</span>
+</a>
+<script>
+(function () {
+  var el = document.getElementById('tmnmv-chat-status');
+  if (!el) return;
+  var label = el.querySelector('.label');
+
+  // Probe the chatbot endpoint. Use a 3s timeout — fail fast.
+  // Sagan hosts chat at chat.tmnmv.com via FastAPI /chat POST. We do a HEAD
+  // first to avoid triggering the LLM. If HEAD fails we fall back to a
+  // GET on / (FastAPI returns 405 on GET /, but the TCP connect succeeds —
+  // meaning Sagan is up even if the route is wrong).
+  var controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+  var timeoutId = setTimeout(function () {
+    if (controller) controller.abort();
+    markUnavailable();
+  }, 3000);
+
+  function markAvailable() {
+    clearTimeout(timeoutId);
+    el.classList.add('available');
+    el.classList.remove('unavailable');
+    label.textContent = 'Chat available';
+    el.setAttribute('aria-label', 'Open chatbot (available)');
+  }
+  function markUnavailable() {
+    clearTimeout(timeoutId);
+    el.classList.add('unavailable');
+    el.classList.remove('available');
+    label.textContent = 'Chat offline';
+    el.setAttribute('aria-label', 'Open chatbot (offline — Sagan may be down)');
+  }
+
+  // Try a HEAD probe first. If that errors (CORS or network), try no-cors mode.
+  fetch('https://chat.tmnmv.com/', {
+    method: 'HEAD',
+    mode: 'no-cors',
+    signal: controller ? controller.signal : undefined,
+    cache: 'no-store'
+  })
+  .then(function () { markAvailable(); })
+  .catch(function () { markUnavailable(); });
+})();
+</script>
+</body>
+</html>
