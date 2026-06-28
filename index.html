@@ -985,15 +985,24 @@
     el.setAttribute('aria-label', 'Open chatbot (offline — Sagan may be down)');
   }
 
-  // Try a HEAD probe first. If that errors (CORS or network), try no-cors mode.
-  fetch('https://chat.tmnmv.com/', {
-    method: 'HEAD',
+  // Probe chat.tmnmv.com via no-cors HEAD. Opaque responses count as success
+  // (we only care that the network round-trip happened). Cache buster prevents
+  // browser from serving a stale failed response across reloads.
+  var probeUrl = 'https://chat.tmnmv.com/?_=' + Date.now();
+  fetch(probeUrl, {
+    method: 'GET',
     mode: 'no-cors',
     signal: controller ? controller.signal : undefined,
     cache: 'no-store'
   })
   .then(function () { markAvailable(); })
-  .catch(function () { markUnavailable(); });
+  .catch(function (err) {
+    // First probe failed — try once more without signal (some browsers
+    // abort no-cors requests during the timeout even when they succeed).
+    fetch(probeUrl, { method: 'GET', mode: 'no-cors', cache: 'no-store' })
+      .then(function () { markAvailable(); })
+      .catch(function () { markUnavailable(); });
+  });
 })();
 </script>
 </body>
