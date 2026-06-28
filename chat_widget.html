@@ -1,0 +1,467 @@
+<style>
+  /* Caption label that appears next to the toggle on first load.
+     Auto-hides once the user opens chat, so it never gets in the way. */
+  #tmnmv-chat-caption {
+    position: fixed !important;
+    inset: auto calc(96px + env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) auto !important;
+    background: #0a0a0a;
+    color: #f5f5f5;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 8px 8px 14px;
+    border-radius: 999px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    z-index: 9999 !important;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateX(8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #tmnmv-chat-caption::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 8px;
+    height: 8px;
+    background: #0a0a0a;
+  }
+  #tmnmv-chat-caption.visible {
+    opacity: 1;
+    transform: translateX(0);
+    /* Soft pulse to draw the eye on first appearance */
+    animation: tmnmv-caption-pulse 2.4s ease-in-out 0.6s 2;
+  }
+  #tmnmv-chat-caption.hidden { display: none !important; }
+  /* Close button on the caption — explicit dismissal */
+  #tmnmv-chat-caption-close {
+    pointer-events: auto;
+    background: transparent;
+    border: none;
+    color: #a3a3a3;
+    font-size: 18px;
+    line-height: 1;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s, background 0.15s;
+    font-family: inherit;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  #tmnmv-chat-caption-close:hover {
+    color: #f5f5f5;
+    background: rgba(255,255,255,0.12);
+  }
+  @keyframes tmnmv-caption-pulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+    50%      { box-shadow: 0 4px 16px rgba(0,0,0,0.25), 0 0 0 6px rgba(15,98,254,0.18); }
+  }
+  /* On very small phones, drop the caption so it doesn't crowd the button */
+  @media (max-width: 380px) {
+    #tmnmv-chat-caption { display: none !important; }
+  }
+
+  /* Chat widget — floating button + slide-up panel
+     Mobile-first approach. Uses inset shorthand (better browser support
+     than bottom/right in some Android Chrome builds) and !important on
+     the critical positioning rules to override any rogue page CSS. */
+
+  #tmnmv-chat-toggle {
+    position: fixed !important;
+    /* inset shorthand = top/right/bottom/left in one declaration.
+       24px is the base offset; we add env(safe-area-inset-*) inline as
+       fallback in case CSS variable inheritance is broken. */
+    inset: auto calc(24px + env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) auto !important;
+    width: 56px;
+    height: 56px;
+    border-radius: 28px;
+    background: #0f62fe;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    z-index: 9999 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, transform 0.15s;
+    /* Force a compositor layer — fixes iOS Safari stacking issues, harmless elsewhere */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    /* Stop mobile browser from applying default button styles that hide the SVG */
+    padding: 0;
+    color: #fff;
+    font: inherit;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+  }
+  #tmnmv-chat-toggle:hover { background: #0353e9; }
+  #tmnmv-chat-toggle:active { transform: translateZ(0) scale(0.96); }
+  #tmnmv-chat-toggle svg {
+    fill: #fff;
+    width: 28px;
+    height: 28px;
+    display: block;
+    pointer-events: none;
+  }
+
+  #tmnmv-chat-panel {
+    position: fixed !important;
+    inset: auto calc(24px + env(safe-area-inset-right, 0px)) calc(96px + env(safe-area-inset-bottom, 0px)) calc(24px + env(safe-area-inset-left, 0px)) !important;
+    width: 380px;
+    max-width: 380px;
+    max-height: min(560px, calc(100vh - 120px - env(safe-area-inset-bottom, 0px)), calc(100dvh - 120px - env(safe-area-inset-bottom, 0px)));
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    z-index: 9998 !important;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+  #tmnmv-chat-panel.open { display: flex !important; }
+
+  #tmnmv-chat-header {
+    background: #161616;
+    color: white;
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.16px;
+    flex-shrink: 0;
+  }
+  #tmnmv-chat-header span {
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: #8d8d8d;
+    margin-top: 2px;
+    letter-spacing: 0.32px;
+    text-transform: uppercase;
+  }
+
+  #tmnmv-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 200px;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .tmnmv-msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-break: break-word;
+  }
+  .tmnmv-msg.user {
+    align-self: flex-end;
+    background: #0f62fe;
+    color: white;
+    border-bottom-right-radius: 3px;
+  }
+  .tmnmv-msg.bot {
+    align-self: flex-start;
+    background: #f4f4f4;
+    color: #161616;
+    border-bottom-left-radius: 3px;
+  }
+  .tmnmv-msg.refusal {
+    background: #edf5ff;
+    color: #0f62fe;
+    border-left: 3px solid #0f62fe;
+  }
+  .tmnmv-msg.error {
+    background: #fff0f0;
+    color: #da1e28;
+    border-left: 3px solid #da1e28;
+  }
+  .tmnmv-msg.refusal a, .tmnmv-msg.bot a { color: #0f62fe; }
+
+  #tmnmv-chat-welcome {
+    padding: 8px 0;
+    font-size: 13px;
+    color: #525252;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 4px;
+  }
+
+  .tmnmv-chat-disclaimer {
+    margin-top: 6px;
+    font-size: 11px;
+    color: #8d8d8d;
+    font-style: italic;
+  }
+
+  #tmnmv-chat-input-row {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid #e0e0e0;
+    background: #fafafa;
+    /* Push the input above the iOS home indicator / Android gesture bar */
+    padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    flex-shrink: 0;
+  }
+  #tmnmv-chat-input {
+    flex: 1;
+    border: none;
+    border-bottom: 2px solid #e0e0e0;
+    background: transparent;
+    padding: 8px 0;
+    font-size: 16px;  /* 16px prevents iOS Safari from auto-zooming on focus */
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    color: #161616;
+    outline: none;
+    resize: none;
+    min-height: 40px;
+    max-height: 80px;
+    transition: border-color 0.2s;
+  }
+  #tmnmv-chat-input:focus { border-bottom-color: #0f62fe; }
+  #tmnmv-chat-input::placeholder { color: #8d8d8d; }
+
+  #tmnmv-chat-send {
+    background: #0f62fe;
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    flex-shrink: 0;
+    padding: 0;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  #tmnmv-chat-send:hover { background: #0353e9; }
+  #tmnmv-chat-send:disabled { background: #c6c6c6; cursor: default; }
+  #tmnmv-chat-send svg { fill: white; width: 18px; height: 18px; display: block; }
+
+  /* ===== Mobile / tablet (<= 768px) =====
+     Full-width edge-to-edge panel, larger touch targets for the toggle.
+     Bumped from 420px so iPad portrait and Android tablets also get the
+     proper full-width experience. */
+  @media (max-width: 768px) {
+    #tmnmv-chat-panel {
+      inset: auto 12px calc(88px + env(safe-area-inset-bottom, 0px)) 12px !important;
+      width: auto !important;
+      max-width: none !important;
+      max-height: calc(100dvh - 100px - env(safe-area-inset-bottom, 0px)) !important;
+    }
+    #tmnmv-chat-toggle {
+      inset: auto calc(16px + env(safe-area-inset-right, 0px)) calc(16px + env(safe-area-inset-bottom, 0px)) auto !important;
+      width: 60px;
+      height: 60px;
+      border-radius: 30px;
+    }
+    #tmnmv-chat-messages {
+      max-height: calc(100dvh - 240px - env(safe-area-inset-bottom, 0px));
+    }
+  }
+
+  /* Very small phones (<= 380px) — tighten margins */
+  @media (max-width: 380px) {
+    #tmnmv-chat-panel { inset: auto 8px calc(88px + env(safe-area-inset-bottom, 0px)) 8px !important; }
+    #tmnmv-chat-toggle { inset: auto calc(12px + env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) auto !important; }
+  }
+</style>
+
+<!-- Floating toggle button -->
+<button id="tmnmv-chat-toggle" type="button" title="Chat with TMNMV" aria-label="Open chat">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+</button>
+
+<!-- Caption that hovers next to the button until user dismisses it.
+     Reappears after 30 days, or when the user clears localStorage. -->
+<div id="tmnmv-chat-caption" aria-hidden="true">
+  <span class="tmnmv-chat-caption-text">Ask me anything! <span aria-hidden="true">&#128172;</span></span>
+  <button id="tmnmv-chat-caption-close" type="button" aria-label="Dismiss">&times;</button>
+</div>
+
+<!-- Chat panel -->
+<div id="tmnmv-chat-panel" role="dialog" aria-label="TMNMV Chat" aria-hidden="true">
+  <div id="tmnmv-chat-header">
+    TMNMV Assistant
+    <span>AI-powered consulting Q&amp;A</span>
+  </div>
+
+  <div id="tmnmv-chat-messages">
+    <div id="tmnmv-chat-welcome">
+      Hi! I can answer questions about TMNMV's consulting services — IT implementation, AI integration, marketing strategy, financial services, and more.
+      <div class="tmnmv-chat-disclaimer">This is a sample bot. More complex reasoning available.</div>
+    </div>
+  </div>
+
+  <div id="tmnmv-chat-input-row">
+    <input
+      type="text"
+      id="tmnmv-chat-input"
+      placeholder="Ask about our services..."
+      maxlength="1000"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+    />
+    <button id="tmnmv-chat-send" type="button" aria-label="Send message">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+(function () {
+  const toggle    = document.getElementById('tmnmv-chat-toggle');
+  const panel     = document.getElementById('tmnmv-chat-panel');
+  const messages  = document.getElementById('tmnmv-chat-messages');
+  const welcome   = document.getElementById('tmnmv-chat-welcome');
+  const input     = document.getElementById('tmnmv-chat-input');
+  const sendBtn   = document.getElementById('tmnmv-chat-send');
+  const caption   = document.getElementById('tmnmv-chat-caption');
+  const captionClose = document.getElementById('tmnmv-chat-caption-close');
+
+  if (!toggle || !panel || !messages || !input || !sendBtn) return;
+
+  // Caption dismissal: 30-day re-show cycle, not a permanent flag.
+  // We store a timestamp (ms since epoch) in localStorage. If the timestamp
+  // is older than 30 days (or missing), the caption shows.
+  var CAPTION_STORAGE_KEY = 'tmnmv-chat-caption-dismissed-at';
+  var CAPTION_TTL_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+  function isCaptionDismissed() {
+    try {
+      var raw = localStorage.getItem(CAPTION_STORAGE_KEY);
+      if (!raw) return false;
+      var ts = parseInt(raw, 10);
+      if (isNaN(ts)) return false;
+      // If the dismissal was older than TTL, treat as not dismissed
+      return (Date.now() - ts) < CAPTION_TTL_MS;
+    } catch (_) { return false; }
+  }
+
+  function dismissCaption() {
+    if (!caption) return;
+    caption.classList.add('hidden');
+    try { localStorage.setItem(CAPTION_STORAGE_KEY, String(Date.now())); } catch (_) {}
+  }
+
+  // Show the "Ask me anything!" caption on first visit (or after 30-day TTL).
+  if (caption) {
+    if (!isCaptionDismissed()) {
+      setTimeout(function () { caption.classList.add('visible'); }, 1200);
+    }
+  }
+
+  // Toggle panel
+  toggle.addEventListener('click', function () {
+    const isOpen = panel.classList.toggle('open');
+    panel.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    // First click also dismisses the caption (if it's still visible).
+    if (caption && !caption.classList.contains('hidden')) {
+      dismissCaption();
+    }
+    if (isOpen) {
+      // Wait one frame so the panel is visible before focusing
+      requestAnimationFrame(() => input.focus());
+    }
+  });
+
+  // Close button on the caption itself — explicit dismissal.
+  if (captionClose) {
+    captionClose.addEventListener('click', function (e) {
+      e.stopPropagation();
+      dismissCaption();
+    });
+  }
+
+  // Close panel on Escape
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && panel.classList.contains('open')) {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      toggle.focus();
+    }
+  });
+
+  function appendMessage(text, role, extraClass) {
+    if (welcome) { welcome.remove(); }
+    var div = document.createElement('div');
+    div.className = 'tmnmv-msg ' + role + (extraClass ? ' ' + extraClass : '');
+    div.innerHTML = text;
+    messages.appendChild(div);
+    // Smooth scroll to bottom
+    requestAnimationFrame(() => { messages.scrollTop = messages.scrollHeight; });
+    return div;
+  }
+
+  function setInputEnabled(enabled) {
+    input.disabled = !enabled;
+    sendBtn.disabled = !enabled;
+  }
+
+  async function sendMessage() {
+    var text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    setInputEnabled(false);
+
+    appendMessage(text, 'user');
+
+    try {
+      var res = await fetch('https://chat.tmnmv.com/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text }),
+      });
+      var data = await res.json();
+
+      if (!res.ok) {
+        appendMessage(data.error || 'Something went wrong. Please try again.', 'bot', 'error');
+      } else if (data.refusal) {
+        appendMessage(data.message, 'bot', 'refusal');
+      } else {
+        appendMessage(data.message, 'bot');
+      }
+    } catch (e) {
+      appendMessage('Connection error. Please check your network and try again.', 'bot', 'error');
+    } finally {
+      setInputEnabled(true);
+      input.focus();
+    }
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+})();
+</script>
