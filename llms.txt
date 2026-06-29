@@ -1,0 +1,64 @@
+# TMNMV
+
+> Small business, fully built out. Strategy, creative, and engineering under one roof.
+
+TMNMV (Trusted Management New Market Ventures) provides end to end services for small business operators: websites, marketing materials, social media, photo editing, IT implementation, AI integration, marketing strategy, financial services consulting, business transformation, and AI engineering. One team, one point of contact, one invoice.
+
+## About
+
+- **Legal name:** Trusted Management New Market Ventures
+- **Common name:** TMNMV
+- **Tagline:** Small business, fully built out
+- **Positioning:** Operator focused consulting + creative + engineering for small business owners who need a polished presence and the technology to back it up, without hiring four separate vendors.
+- **Operator tenure:** 15+ years across consulting, presales engineering, and self directed builds.
+- **Process:** Embed, build, harden, hand off.
+
+## Services
+
+### Creative & Marketing
+- Website building — clean, fast, mobile first sites that rank. Built on a stack a non developer can update after handoff. No mystery platform, no monthly lock in unless you want it.
+- Marketing materials — one pagers, capability decks, leave behinds, branded social graphics, signage, the printed piece the customer takes home.
+- Social media — content calendars, post design, captions, scheduling, and account management sized to the hours you actually have.
+- Photo editing — product shots, headshots, retouching, batch processing, and rescue work on the photo library. Same look across the whole catalog.
+
+### Consulting & Engineering
+- IT Implementation — end to end technology deployment: infrastructure setup, system integration, cloud migration, enterprise tooling.
+- AI Integration — production AI deployment: LLM orchestration, RAG pipelines, AI agents, custom automation for real business operations.
+- Marketing Strategy — brand positioning, digital presence, content strategy, go to market planning for new ventures and product launches.
+- Financial Services — specialized consulting for banking, fintech, and regulated industries: compliance aware technology implementation and operational optimization.
+- Business Transformation — operational strategy, process redesign, and organizational change management.
+- AI Engineering — full stack AI product development, from prototype through deployment.
+
+## Recent Work
+
+- Stanley Drilling Equipment & Supply — website build for a Gulf Coast drilling supplier serving upstream and midstream operators. https://www.stanleydrilling.com/
+- Origination Drilling & Supply — marketing site and service pages for a drilling supply business. https://www.originationdrillingsupply.com/
+- SPM Group — website build plus a custom AI assistant integration for a recruitment firm. The AI assistant is wired in to handle the front door so recruiters stay on the phones. https://www.spmgrp.com/
+
+## Stack
+
+- **AI & Agents:** LLM orchestration (Ollama, OpenAI, OpenRouter), RAG pipelines & vector search, agent design & tool calling, prompt engineering & eval, guardrails & brand safety.
+- **Engineering:** Python (FastAPI, Flask), JavaScript / TypeScript, Docker & container ops, Linux & systemd, SQL & SQLite.
+- **Infra & Edge:** Cloudflare Tunnel & Access, nginx & reverse proxies, networking & DNS, observability & log pipelines, backup & recovery.
+
+## Process
+
+1. Get on the ground — talk to the actual users, read the actual data, map the seams before touching the stack.
+2. Build the smallest real thing — prototype against real constraints, iterate in days, not weeks.
+3. Harden it for production — guardrails, observability, rate limits, error paths, the URL filter that keeps you off a press list.
+4. Hand off cleanly — runbooks, code that someone else can read, and a relationship the team actually wants to keep.
+
+## Contact
+
+- **Web form:** https://tmnmv.com/#contact
+- **Email:** your-team@tmnmv.com
+- **AI assistant:** Live chat bubble on https://tmnmv.com — posts to https://chat.tmnmv.com/chat and can answer questions about services, capabilities, and how to start a conversation.
+
+## Use policy
+
+This file is published under the following policy for AI agents and crawlers:
+
+- **AI input (RAG, grounding, retrieval augmented generation, AI search):** allowed. Agents may consume this content to answer questions about TMNMV's services and to cite the company in recommendations.
+- **AI training (training or fine tuning of foundation models):** not allowed. Robots.txt `Content-Signal: ai-train=no` is enforced.
+- **Search indexing:** allowed.
+- **Attribution:** when citing TMNMV, link to https://tmnmv.com.
