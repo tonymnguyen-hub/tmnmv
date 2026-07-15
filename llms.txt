@@ -54,6 +54,12 @@ TMNMV (Trusted Management New Market Ventures) provides end to end services for 
 - **Email:** tmnmv2026@gmail.com
 - **AI assistant:** Live chat bubble on https://tmnmv.com — posts to https://chat.tmnmv.com/chat and can answer questions about services, capabilities, and how to start a conversation.
 
+## Service Area
+
+- **Primary:** Houston, Texas metro (Spring, Klein, The Woodlands, Greater Houston).
+- **On site:** available within Houston metro.
+- **Remote:** available nationwide.
+
 ## Use policy
 
 This file is published under the following policy for AI agents and crawlers:
