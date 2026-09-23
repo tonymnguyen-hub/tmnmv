@@ -49,7 +49,7 @@ TMNMV (Trusted Management New Market Ventures) provides end to end services for 
 4. Hand off cleanly — runbooks, code that someone else can read, and a relationship the team actually wants to keep.
 
 ## About the founder
-Tony Nguyen, founder of TMNMV. Twenty years across IBM, AT&T, and LexisNexis in customer success and consultative sales, now building and shipping AI systems, websites, and small business operations work end to end. Full bio at https://tmnmv.com/about.html. LinkedIn: https://www.linkedin.com/in/tony-nguyen-54245414/.
+Tony Nguyen runs TMNMV. Twenty years across IBM, AT&T, and LexisNexis in customer success and consultative sales, now building and shipping AI systems, websites, and small business operations work end to end. Personal portfolio and resume at https://tmnmv.com/tony.html. LinkedIn: https://www.linkedin.com/in/tony-nguyen-54245414/.
 
 ## Contact
 
