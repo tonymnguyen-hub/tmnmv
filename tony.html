@@ -145,6 +145,15 @@
       pointer-events: none;
       z-index: -1;
     }
+    .hero-portrait {
+      width: 128px;
+      height: 128px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--border);
+      margin-bottom: 28px;
+      display: block;
+    }
     .hero h1 {
       font-size: clamp(36px, 5.5vw, 60px);
       font-weight: 800;
@@ -373,6 +382,7 @@
 
 <header class="hero">
   <div class="wrap">
+    <img class="hero-portrait" src="assets/tony-profile-pic.jpg" alt="Tony Nguyen" width="128" height="128">
     <h1>
       Hi, I&rsquo;m Tony.<br>
       <span class="accent">Discovery, demos, implementation, and now I build it too.</span>
@@ -588,11 +598,10 @@
         the AI agents and RAG pipelines on my own projects, is how I close that gap, one project at a time.
       </p>
       <p>
-        <strong>Two.</strong> I write better than I speak. That is a feature, not a bug, for the work I do. The
-        deliverables I ship are written. The AI systems I build are written. The discovery calls and demos happen
-        on the phone and the video call, and they are fine, but the work is the artifact. If you hire me for the
-        speaking part of the job, I will deliver. If you hire me for the writing part, you will get more than you
-        expected.
+        <strong>Two.</strong> Most of the work I do is written. Proposals, architecture docs, integration runbooks,
+        prompt libraries, postmortems. I write better than I speak, and that is the part of the job I do best.
+        Discovery calls and demos happen on the phone and on video, and they are fine, but the deliverable is
+        the artifact.
       </p>
       <p>
         <strong>Three.</strong> I am pivoting from enterprise customer-facing work into Forward Deployed Engineer and AI
