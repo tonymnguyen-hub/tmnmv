@@ -20,23 +20,19 @@ User-agent: *
 Content-Signal: search=yes,ai-train=no,use=reference
 Allow: /
 
-# --- AI answer and search agents: do not retrieve the employer-only page ---
+# --- AI index and search agents: do not retrieve the employer-only page ---
+#
+# Only the indexing agents are blocked. The user-triggered fetchers
+# (ChatGPT-User, Perplexity-User, Claude-User) are deliberately left
+# allowed: they fire only when a human pastes the link, which is exactly
+# what a recruiter does with it.
 User-agent: OAI-SearchBot
-Disallow: /tony.html
-
-User-agent: ChatGPT-User
 Disallow: /tony.html
 
 User-agent: PerplexityBot
 Disallow: /tony.html
 
-User-agent: Perplexity-User
-Disallow: /tony.html
-
 User-agent: Claude-SearchBot
-Disallow: /tony.html
-
-User-agent: Claude-User
 Disallow: /tony.html
 
 User-agent: Applebot
